@@ -4,9 +4,9 @@ using std::vector;
 class Solution
 {
 public:
+    // Runtime should be O(log (m+n))
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
     {
-        int m = (int)nums1.size();
-        int n = (int)nums2.size();
+        // Finding the median is O(log(m+n))
     }
 };
