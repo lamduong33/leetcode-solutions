@@ -7,9 +7,18 @@ public:
     // number of continuous subarrays whose sum equals to k.
     int subarraySum(std::vector<int>& nums, int k)
     {
-        int result = 0;
+        auto result = 0;
         for (int i = 0; i < nums.size(); i++)
         {
+            auto rollingSum = 0;
+            for (int j = i; j < nums.size(); j++)
+            {
+                rollingSum += nums[j];
+                if (rollingSum == k)
+                {
+                    result++;
+                }
+            }
         }
         return result;
     }
