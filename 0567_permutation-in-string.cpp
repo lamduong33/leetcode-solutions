@@ -1,4 +1,5 @@
 #include <string>
+#include <unordered_map>
 
 class Solution
 {
@@ -10,8 +11,54 @@ public:
      * */
     bool checkInclusion(std::string s1, std::string s2)
     {
-        bool result;
+        bool result = false;
+        int matchSize = (int)s1.size(), matchCount = 0;
 
+        // Build targets, for matches after => O(s1)
+        std::unordered_map<char, int> targets, encountered;
+        for (auto character : s1)
+        {
+            if (targets.count(character))
+            {
+                targets[character]++;
+            }
+            else
+            {
+                targets[character] = 1;
+            }
+        }
+
+        // Check for matches => O(s2)
+        for (auto character : s2)
+        {
+            if (targets.count(character))
+            {
+                if (encountered.count(character))
+                    encountered[character]++;
+                else
+                    encountered[character] = 1;
+
+                if (encountered[character] == targets[character])
+                {
+                    matchCount++;
+                    if (matchCount == matchSize)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+                else if (encountered[character] > targets[character])
+                {
+                    // TODO: Restart
+                }
+            }
+            else
+            {
+                // TODO: Restart
+            }
+        }
+
+        // Final runtime => O(s1+s2)
         return result;
     }
 };
