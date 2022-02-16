@@ -11,6 +11,7 @@ public:
      * */
     bool checkInclusion(std::string s1, std::string s2)
     {
+        if (s1.length() > s2.length()) return false;
         bool result = false;
 
         // Build targets, for matches after => O(s1)
