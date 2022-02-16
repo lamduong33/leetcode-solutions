@@ -12,49 +12,45 @@ public:
     bool checkInclusion(std::string s1, std::string s2)
     {
         bool result = false;
-        int matchSize = (int)s1.size(), matchCount = 0;
 
         // Build targets, for matches after => O(s1)
         std::unordered_map<char, int> targets, encountered;
         for (auto character : s1)
-        {
-            if (targets.count(character))
-            {
-                targets[character]++;
-            }
-            else
-            {
-                targets[character] = 1;
-            }
-        }
+            targets[character]++;
+        int matchSize = (int)targets.size(), matchCount = 0, p1 = 0;
 
-        // Check for matches => O(s2)
-        for (auto character : s2)
+        for (int p2 = 0; p2 < s2.size(); p2++)
         {
-            if (targets.count(character))
+            if (targets.count(s2[p2]))
             {
-                if (encountered.count(character))
-                    encountered[character]++;
-                else
-                    encountered[character] = 1;
-
-                if (encountered[character] == targets[character])
+                // Check if sliding window size is exceeded
+                if ((p2 - p1) > (s1.size() - 1))
                 {
+                    if (encountered[s2[p1]] == targets[s2[p1]])
+                        matchCount--; // about to lose count, misses target
+                    else if (encountered[s2[p1]] == targets[s2[p1]]+1)
+                        matchCount++; // lose count reaches target
+                    encountered[s2[p1]]--;
+                    p1++;
+                }
+                auto lastChar = s2[p2];
+                encountered[lastChar]++;
+                if (encountered[lastChar] == targets[lastChar])
                     matchCount++;
-                    if (matchCount == matchSize)
-                    {
-                        result = true;
-                        break;
-                    }
-                }
-                else if (encountered[character] > targets[character])
+                else if (encountered[lastChar] == targets[lastChar]+1)
+                    matchCount--;
+                if (matchCount == matchSize)
                 {
-                    // TODO: Restart
+                    result = true;
+                    break;
                 }
             }
             else
             {
-                // TODO: Restart
+                // reset since this char is not in targets
+                encountered.clear();
+                matchCount = 0;
+                p1 = p2 + 1;
             }
         }
 
