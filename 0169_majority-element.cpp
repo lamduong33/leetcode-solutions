@@ -1,10 +1,12 @@
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 using std::vector;
 
 class Solution
 {
 public:
+    /**
+     * O(n log n) runtime and O(1) space. Make sure to include <algorithm>*/
     int majorityElement(vector<int>& nums)
     {
         int size = nums.size();
