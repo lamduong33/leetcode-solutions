@@ -42,7 +42,7 @@ public:
     {
         if (!visited.count(node))
         {
-            if (node == nullptr)
+            if (copy == nullptr)
             {
                 copy = new Node(node->val);
             }
