@@ -35,11 +35,11 @@ public:
     {
         Node* copyGraph = nullptr;
         auto copy = copyGraph;
-        DFClone(node, copy);
+        copy = DFClone(node, copy);
         return copyGraph;
     }
 
-    void DFClone(Node* node, Node* copy)
+    Node* DFClone(Node* node, Node* copy)
     {
         if (!visited.count(node))
         {
@@ -50,16 +50,16 @@ public:
             else
             {
                 auto newCopy = new Node(node->val);
-                copy->neighbors.push_back(newCopy);
                 newCopy->neighbors.push_back(copy);
                 copy = newCopy;
             }
             visited.insert(node);
             for (auto neighbor : node->neighbors)
             {
-                DFClone(neighbor, copy);
+                copy->neighbors.push_back(DFClone(neighbor, copy));
             }
         }
+        return copy;
     }
 
 };
