@@ -1,5 +1,6 @@
 // #include <unordered_set>
 // #include <vector>
+// #include <iostream>
 // using std::vector;
 
 // // Definition for a Node.
@@ -53,11 +54,12 @@ public:
                 newCopy->neighbors.push_back(copy);
                 copy = newCopy;
             }
-            visited.insert(copy);
+            visited.insert(node);
             for (auto neighbor : node->neighbors)
             {
                 DFClone(neighbor, copy);
             }
         }
     }
+
 };
