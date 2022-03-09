@@ -14,40 +14,37 @@ class Solution
 public:
     ListNode* deleteDuplicates(ListNode* head)
     {
-        auto dummy = new ListNode{101, head}, pointer1 = dummy, pointer2 = head;
-        int repeating = -101;
-        while (pointer2 != nullptr)
+        // Get all repeating members
+        auto dummy = new ListNode{-101, head}, q = dummy, p = head;
+        auto encountered = std::unordered_set<int>{};
+        auto blackList = std::unordered_set<int>{};
+        while (p != nullptr)
         {
-            if (pointer2->next != nullptr)
+            if (!encountered.count(p->val))
             {
-                // If they are the same value. This means this is a repeat.
-                if (pointer2->val == pointer2->next->val)
-                {
-                    pointer2 = pointer2->next;
-                    repeating = pointer2->val;
-                }
-                else
-                {
-                    // Not a repeat. But there are two cases. One is that the
-                    // next one will repeat. The other is that it does not.
-                    if (pointer2->next->next != nullptr)
-                    {
-                        if (pointer2->next->val == pointer2->next->next->val)
-                        {
-                            pointer2 = pointer2->next;
-                        }
-                        else
-                        {
-                            pointer1->next = pointer2->next;
-                            pointer1 = pointer1->next; // only advance if the
-                                                       // next sequence is not a
-                                                       // repeating sequence
-                            pointer2 = pointer2->next->next;
-                        }
-                    }
-                }
+                encountered.insert(p->val);
+            }
+            else
+            {
+                blackList.insert(p->val);
+            }
+            p = p->next;
+        }
+        p = head;
+        while (p != nullptr)
+        {
+            if (blackList.count(p->val))
+            {
+                p = p->next;
+            }
+            else
+            {
+                q->next = p;
+                q = q->next;
+                p = p->next;
             }
         }
+        q->next = nullptr;
         return dummy->next;
     }
 };
