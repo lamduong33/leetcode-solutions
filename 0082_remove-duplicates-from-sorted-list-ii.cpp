@@ -14,37 +14,28 @@ class Solution
 public:
     ListNode* deleteDuplicates(ListNode* head)
     {
-        // Get all repeating members
         auto dummy = new ListNode{-101, head}, q = dummy, p = head;
-        auto encountered = std::unordered_set<int>{};
-        auto blackList = std::unordered_set<int>{};
+        auto r = dummy->val;
         while (p != nullptr)
         {
-            if (!encountered.count(p->val))
+            if (p->val != r)
             {
-                encountered.insert(p->val);
+                r = p->val;
+                if (p->next != nullptr)
+                {
+                    if (p->next->val != r)
+                    {
+                        q->next = p;
+                        q = q->next;
+                    }
+                }
             }
-            else
+            if ((p->next == nullptr) && (p != q->next))
             {
-                blackList.insert(p->val);
+                q->next = nullptr;
             }
             p = p->next;
         }
-        p = head;
-        while (p != nullptr)
-        {
-            if (blackList.count(p->val))
-            {
-                p = p->next;
-            }
-            else
-            {
-                q->next = p;
-                q = q->next;
-                p = p->next;
-            }
-        }
-        q->next = nullptr;
         return dummy->next;
     }
 };
