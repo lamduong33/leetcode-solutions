@@ -14,27 +14,31 @@ class Solution
 public:
     ListNode* deleteDuplicates(ListNode* head)
     {
-        auto dummy = new ListNode{-101, head}, q = dummy, p = head;
+        auto dummy = new ListNode{-101, head}, b = dummy, q = dummy, p = head;
         auto r = dummy->val;
         while (p != nullptr)
         {
-            if (p->val != r)
+            if (q->val == p->val)
             {
-                r = p->val;
-                if (p->next != nullptr)
-                {
-                    if (p->next->val != r)
-                    {
-                        q->next = p;
-                        q = q->next;
-                    }
-                }
+                r = q->val;
             }
-            if ((p->next == nullptr) && (p != q->next))
+            else
             {
-                q->next = nullptr;
+                if (q->val != r)
+                {
+                    b->next = q;
+                    b = q;
+                }
+                q = p;
             }
             p = p->next;
+        }
+        if (q->val != r)
+        {
+            b->next = q;
+        }
+        else {
+            b->next = nullptr;
         }
         return dummy->next;
     }
