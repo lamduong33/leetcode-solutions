@@ -1,33 +1,38 @@
-#include <vector>
-#include <string>
-#include <map>
 #include <iostream>
-using std::vector;
-using std::string;
-using std::map;
-using std::pair;
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 
-class Solution {
+class Solution
+{
 public:
-    vector<int> partitionLabels(string s)
+    std::vector<int> partitionLabels(std::string s)
     {
-        vector<int> result{};
-        map<char, pair<int, int>> ranges;
+        std::vector<int> result{};
 
-        // Get overlapping ranges
+        std::unordered_map<char, int> charStart; // keep track where each char start
+        std::vector<std::pair<int, int>> rangeMap; // the ranges for each map
+
+        // Get ranges of characters
         for (int i = 0; i < s.size(); i++)
         {
-            auto c = s.at(i);
-            if (ranges.count(s.at(i)))
-                ranges[c].second = i;
+            if (charStart.count(s.at(i)))
+            {
+
+            }
             else
-                ranges[c] = pair<int,int>{i,i};
+            {
+
+            }
         }
 
-        for (auto range : ranges)
+        // Get blocks of overlapping ranges
+        for (auto range : rangeMap)
         {
-
         }
+
+        // Get the size of each block and insert in result
         return result;
     }
 };
