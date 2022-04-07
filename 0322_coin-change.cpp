@@ -7,28 +7,16 @@ class Solution
 public:
     int coinChange(vector<int>& coins, int amount)
     {
-        if (amount == 0) return 0;
-        auto result = -1;
-        std::sort(coins.begin(), coins.end());
-
-        auto largestCoin = coins[coins.size()-1];
-        for (auto i = 0; i < (int)coins.size(); i++)
+        int count = 0;
+        std::sort(coins.begin(), coins.end(), std::greater<int>());
+        for (auto coin : coins)
         {
-            if (amount == coins[i])
-                return 1;
-            else if (amount < coins[i])
+            while (coin < amount)
             {
-                if (i == 0)
-                {
-                    return result;
-                }
-                largestCoin = coins[i-1];
-                break;
+                amount -= coin;
+                count++;
             }
         }
-        vector<int>{2,2};
-        result = coinChange(coins, amount-largestCoin);
-        if (result != -1) result++;
-        return result;
+        return count+1;
     }
 };
