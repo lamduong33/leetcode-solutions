@@ -1,5 +1,5 @@
-#include <vector>
-using std::vector;
+// #include <vector>
+// using std::vector;
 
 class Solution
 {
@@ -11,14 +11,16 @@ public:
         while (i < j)
         {
             auto area = std::min(height[i], height[j]) * (j-i);
-            //std::cout << "area: " << area << std::endl;
             if (area > best)
                 best = area;
-            if ((height[j] - height[i+1]) > (height[j-1] - height[i]))
-                j--;
-            else
+            if (height[i] < height[j])
                 i++;
+            else
+                j--;
         }
         return best;
     }
 };
+
+// [2,3,4,5,18,17,6]
+// [1,3,2,5,25,24,5]
